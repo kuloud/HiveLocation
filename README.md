@@ -26,15 +26,11 @@ Prerequisites
 
 Getting Started
 ---------------
-This sample uses the Gradle build system. To build this project, use the
-"gradlew build" command or use "Import Project" in Android Studio.
-
-The sample also work on Android R, but you will need to change the build.gradle to target R.
 
 ```xml
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 ```
 
 Support

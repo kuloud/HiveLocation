@@ -9,11 +9,11 @@ import com.kuloud.android.location.common.data.LocationManager
  */
 class HiveLocation {
     companion object {
-        fun setClient(context: Context, fusedLocationProviderClient: FusedLocationProviderClient) {
+        fun setClient(context: Context, fusedLocationClient: FusedLocationClient) {
             LocationManager.getInstance(context).stopLocationUpdates()
 
-            LocationClientLocator.getInstance().fusedLocationProviderClient =
-                fusedLocationProviderClient;
+            LocationClientLocator.getInstance().fusedLocationClient =
+                fusedLocationClient;
         }
     }
 }

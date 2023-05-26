@@ -1,17 +1,11 @@
 package com.kuloud.android.location.common
 
-import android.content.Context
-import com.kuloud.android.location.common.data.LocationManager
-import com.kuloud.android.location.common.data.LocationRepository
-import com.kuloud.android.location.common.data.db.LocationDatabase
-import java.util.concurrent.ExecutorService
-
 /**
  * @author kuloud
  * @date 2023/5/26
  */
 class LocationClientLocator {
-    var fusedLocationProviderClient: FusedLocationProviderClient? = null
+    var fusedLocationClient: FusedLocationClient? = null
 
     companion object {
         @Volatile

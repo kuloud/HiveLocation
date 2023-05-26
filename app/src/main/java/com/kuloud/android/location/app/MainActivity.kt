@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), PermissionRequestFragment.Callbacks,
 
         if (currentFragment == null) {
 
-            val fragment = LocationUpdateFragment.newInstance()
+            val fragment = LocationUpdateFragment.newInstance(LocationProviderType.BAIDU)
 
             supportFragmentManager
                 .beginTransaction()
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), PermissionRequestFragment.Callbacks,
     // location fragment.
     override fun displayLocationUI() {
 
-        val fragment = LocationUpdateFragment.newInstance()
+        val fragment = LocationUpdateFragment.newInstance(LocationProviderType.BAIDU)
 
         supportFragmentManager
             .beginTransaction()

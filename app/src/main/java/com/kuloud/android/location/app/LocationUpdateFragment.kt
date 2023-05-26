@@ -65,32 +65,30 @@ open class LocationUpdateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         locationUpdateViewModel.receivingLocationUpdates.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { receivingLocation ->
-                updateStartOrStopButtonState(receivingLocation)
-            }
-        )
+            viewLifecycleOwner
+        ) { receivingLocation ->
+            updateStartOrStopButtonState(receivingLocation)
+        }
 
         locationUpdateViewModel.locationListLiveData.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { locations ->
-                locations?.let {
-                    Log.d(TAG, "Got ${locations.size} locations")
+            viewLifecycleOwner
+        ) { locations ->
+            locations?.let {
+                Log.d(TAG, "Got ${locations.size} locations")
 
-                    if (locations.isEmpty()) {
-                        binding.locationOutputTextView.text =
-                            getString(R.string.emptyLocationDatabaseMessage)
-                    } else {
-                        val outputStringBuilder = StringBuilder("")
-                        for (location in locations) {
-                            outputStringBuilder.append(location.toString() + "\n")
-                        }
-
-                        binding.locationOutputTextView.text = outputStringBuilder.toString()
+                if (locations.isEmpty()) {
+                    binding.locationOutputTextView.text =
+                        getString(R.string.emptyLocationDatabaseMessage)
+                } else {
+                    val outputStringBuilder = StringBuilder("")
+                    for (location in locations) {
+                        outputStringBuilder.append(location.toString() + "\n")
                     }
+
+                    binding.locationOutputTextView.text = outputStringBuilder.toString()
                 }
             }
-        )
+        }
     }
 
     override fun onResume() {
@@ -108,7 +106,8 @@ open class LocationUpdateFragment : Fragment() {
         // could do it at the Activity level if you want to continue receiving location updates
         // while the user is moving between Fragments.
         if ((locationUpdateViewModel.receivingLocationUpdates.value == true) &&
-            (!requireContext().hasPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION))) {
+            (!requireContext().hasPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION))
+        ) {
             locationUpdateViewModel.stopLocationUpdates()
         }
     }
@@ -166,6 +165,15 @@ open class LocationUpdateFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = LocationUpdateFragment()
+        fun newInstance(locationProviderType: LocationProviderType) =
+            when (locationProviderType) {
+                LocationProviderType.AMAP -> AMapLocationUpdateFragment()
+                LocationProviderType.BAIDU -> BaiduLocationUpdateFragment()
+                LocationProviderType.GOOGLE -> GoogleLocationUpdateFragment()
+            }
     }
+}
+
+enum class LocationProviderType {
+    BAIDU, AMAP, GOOGLE
 }

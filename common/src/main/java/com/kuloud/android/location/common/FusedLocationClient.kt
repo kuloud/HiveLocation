@@ -7,7 +7,7 @@ import android.content.Context
  * @author kuloud
  * @date 2023/5/24
  */
-abstract class FusedLocationProviderClient(val context: Context) {
+abstract class FusedLocationClient(val context: Context) {
 
     abstract fun requestLocationUpdates(
         locationRequest: LocationRequest,
