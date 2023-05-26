@@ -1,6 +1,6 @@
 Location Updates in the Background (Kotlin)
 ===========================================
-Demonstrates retrieving location updates(Baidu) in the background.
+Demonstrates retrieving location updates ( Baidu / AMap / Google ) in the background.
 
 Introduction
 ============
@@ -18,19 +18,52 @@ when the user navigates away from the app. To learn how to do that instead, revi
 [Receive location updates in Android 10 with Kotlin](https://codelabs.developers.google.com/codelabs/while-in-use-location/index.html?index=..%2F..index#0)
 codelab.
 
+Features
+--------------
+- Support demonstrates
+  - [ ] Baidu
+  - [ ] AMap
+  - [ ] Google
+
 Prerequisites
 --------------
 
 - Android API Level > v21
-- Google Support Repository
+
 
 Getting Started
 ---------------
 
+### Baidu
+
+Add the dependency below into your **module**'s `build.gradle` file:
+
+```gradle
+dependencies {
+    implementation "com.kuloud.android:location-common:latest"
+    implementation "com.kuloud.android:location-baidu:latest"
+}
+```
+
+Add permissions into your **application**'s `Manifest` file:
+
 ```xml
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问系统接口提供的卫星定位信息-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 ```
 
 Support
