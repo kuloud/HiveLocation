@@ -15,5 +15,6 @@ fun LocationRequest.convertToLocationClientOption(): AMapLocationClientOption {
         LocationRequest.PRIORITY_DEVICE_SENSORS -> AMapLocationClientOption.AMapLocationMode.Device_Sensors
         else -> AMapLocationClientOption.AMapLocationMode.Battery_Saving
     }
+    option.interval = interval
     return option
 }

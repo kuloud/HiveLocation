@@ -24,7 +24,7 @@ open class LocationUpdateFragment : Fragment() {
 
     private var activityListener: Callbacks? = null
 
-    private lateinit var binding: FragmentLocationUpdateBinding
+    protected lateinit var binding: FragmentLocationUpdateBinding
 
     private val locationUpdateViewModel by lazy {
         ViewModelProvider(this)[LocationUpdateViewModel::class.java]
@@ -54,6 +54,20 @@ open class LocationUpdateFragment : Fragment() {
 
         binding = FragmentLocationUpdateBinding.inflate(inflater, container, false)
 
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            val fragment = when (menuItem.itemId) {
+                R.id.action_baidu -> newInstance(LocationProviderType.BAIDU)
+                R.id.action_amap -> newInstance(LocationProviderType.AMAP)
+                R.id.action_google -> newInstance(LocationProviderType.GOOGLE)
+                else -> newInstance(LocationProviderType.BAIDU)
+            }
+
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragment)
+                ?.commit()
+
+            true
+        }
         binding.enableBackgroundLocationButton.setOnClickListener {
             activityListener?.requestBackgroundLocationPermission()
         }
@@ -65,7 +79,7 @@ open class LocationUpdateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         locationUpdateViewModel.receivingLocationUpdates.observe(
             viewLifecycleOwner
         ) { receivingLocation ->

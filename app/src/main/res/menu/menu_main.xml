@@ -3,8 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.kuloud.android.location.app.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_baidu"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/first_fragment_label"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_amap"
+        android:orderInCategory="100"
+        android:title="@string/second_fragment_label"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_google"
+        android:orderInCategory="100"
+        android:title="@string/third_fragment_label"
         app:showAsAction="never" />
 </menu>

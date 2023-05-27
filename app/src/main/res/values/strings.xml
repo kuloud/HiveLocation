@@ -5,6 +5,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">百度定位</string>
     <string name="second_fragment_label">高德定位</string>
+    <string name="third_fragment_label">谷歌定位</string>
 
     <string name="fine_location_permission_rationale">The fine location permission is needed for core functionality.</string>
     <string name="fine_permission_denied_explanation">Fine location permission was denied, but is needed for core functionality.</string>

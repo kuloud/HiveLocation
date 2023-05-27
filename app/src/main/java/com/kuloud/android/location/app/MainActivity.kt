@@ -1,9 +1,13 @@
 package com.kuloud.android.location.app
 
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import com.kuloud.android.location.app.databinding.ActivityMainBinding
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(), PermissionRequestFragment.Callbacks,
     LocationUpdateFragment.Callbacks {
@@ -23,7 +27,13 @@ class MainActivity : AppCompatActivity(), PermissionRequestFragment.Callbacks,
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit()
+
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d(TAG, "onOptionsItemSelected: $item")
+        return super.onOptionsItemSelected(item)
     }
 
     // Triggered from the permission Fragment that it's the app has permissions to display the
