@@ -44,3 +44,11 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.4.2'
     kapt 'androidx.room:room-compiler:2.4.2'
 }
+
+ext {
+    releaseArtifact = 'location-common'
+    releaseDescription = '定位组件基础模块'
+    releaseVersion = '0.0.1'
+}
+
+apply from: rootProject.file('gradle/release_github_package_registry.gradle')

@@ -5,11 +5,27 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+Properties properties = new Properties()
+File propertiesFile = new File(rootProject.projectDir, 'local.properties')
+if (propertiesFile.exists()) {
+    InputStream inputStream = propertiesFile.newDataInputStream()
+    properties.load(inputStream)
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+
+        maven {
+            url 'https://maven.pkg.github.com/kuloud/HiveLocation'
+            credentials {
+                username = properties.getProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = properties.getProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
     }
 }
 rootProject.name = "HiveLocation"

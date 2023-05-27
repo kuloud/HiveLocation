@@ -64,7 +64,8 @@ dependencies {
 
     implementation project(path: ':amap')
     implementation project(path: ':baidu')
-    implementation project(path: ':common')
+//    implementation project(path: ':common')
+    implementation 'com.kuloud.android:location-common:0.0.1'
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'

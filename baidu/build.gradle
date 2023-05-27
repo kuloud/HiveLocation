@@ -38,7 +38,16 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    implementation project(path: ':common')
+//    implementation project(path: ':common')
+    implementation 'com.kuloud.android:location-common:0.0.1'
 
     api 'com.baidu.lbsyun:BaiduMapSDK_Location:9.4.0'
 }
+
+ext {
+    releaseArtifact = 'location-baidu'
+    releaseDescription = '定位组件基础模块-百度'
+    releaseVersion = '0.0.1'
+}
+
+apply from: rootProject.file('gradle/release_github_package_registry.gradle')
