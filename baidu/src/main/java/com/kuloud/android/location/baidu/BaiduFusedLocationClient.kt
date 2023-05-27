@@ -3,15 +3,29 @@ package com.kuloud.android.location.baidu
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
+import com.baidu.location.BDLocation.TYPE_CLOSE_LOCATION_SERVICE_SWITCH_FAIL
+import com.baidu.location.BDLocation.TYPE_NO_PERMISSION_LOCATION_FAIL
+import com.baidu.location.BDLocation.TypeCriteriaException
+import com.baidu.location.BDLocation.TypeGnssLocation
+import com.baidu.location.BDLocation.TypeGpsLocation
+import com.baidu.location.BDLocation.TypeNetWorkException
+import com.baidu.location.BDLocation.TypeOffLineLocation
+import com.baidu.location.BDLocation.TypeOffLineLocationFail
+import com.baidu.location.BDLocation.TypeOffLineLocationNetworkFail
 import com.baidu.location.LocationClient
 import com.kuloud.android.location.common.FusedLocationClient
+import com.kuloud.android.location.common.LocationAvailability
 import com.kuloud.android.location.common.LocationRequest
 import com.kuloud.android.location.common.LocationResult
 import com.kuloud.android.location.common.LocationUpdatesBroadcastReceiver.Companion.ACTION_PROCESS_UPDATES
 import com.kuloud.android.location.common.LocationUpdatesBroadcastReceiver.Companion.EXTRA_LOCATION_AVAILABILITY
 import com.kuloud.android.location.common.LocationUpdatesBroadcastReceiver.Companion.EXTRA_LOCATION_RESULT
+
+
+private const val TAG = "BDLocationReceived"
 
 /**
  * @author kuloud
@@ -24,8 +38,11 @@ class BaiduFusedLocationClient(context: Context) : FusedLocationClient(
     private val innerClient: LocationClient = LocationClient(context)
 
     init {
+        Log.d(TAG, "registerLocationListener ${innerClient.accessKey}")
+
         innerClient.registerLocationListener(object : BDAbstractLocationListener() {
             override fun onReceiveLocation(location: BDLocation?) {
+                Log.d(TAG, "onReceiveLocation: $location")
                 location?.apply {
                     val intent = Intent(ACTION_PROCESS_UPDATES)
 
@@ -44,8 +61,18 @@ class BaiduFusedLocationClient(context: Context) : FusedLocationClient(
                     public static final int TYPE_NO_PERMISSION_LOCATION_FAIL = 70;
                     public static final int TYPE_NO_PERMISSION_AND_CLOSE_SWITCH_FAIL = 71;
                      */
-                    intent.putExtra(EXTRA_LOCATION_AVAILABILITY, 1)
-                    intent.putExtra(EXTRA_LOCATION_RESULT, LocationResult())
+                    val locationAvailability = LocationAvailability()
+                    val status = when (locType) {
+                        TypeGpsLocation, TypeGnssLocation, TypeOffLineLocation -> LocationAvailability.STATUS_SUCCESSFUL
+                        TypeCriteriaException, TypeNetWorkException, TypeOffLineLocationFail, TypeOffLineLocationNetworkFail, TYPE_CLOSE_LOCATION_SERVICE_SWITCH_FAIL, TYPE_NO_PERMISSION_LOCATION_FAIL -> LocationAvailability.STATUS_UNSUCCESSFUL
+                        else -> LocationAvailability.STATUS_UNKNOWN
+                    }
+                    locationAvailability.status = status
+                    intent.putExtra(EXTRA_LOCATION_AVAILABILITY, locationAvailability)
+                    val locationResult = LocationResult()
+                    locationResult.locations = arrayListOf(location.toFusedLocation())
+                    intent.putExtra(EXTRA_LOCATION_RESULT, locationResult)
+                    intent.setPackage(context.packageName)
                     context.sendBroadcast(intent)
                 }
 

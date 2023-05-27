@@ -19,24 +19,24 @@ private const val TAG = "LUBroadcastReceiver"
 class LocationUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log.d(TAG, "onReceive() context:$context, intent:$intent")
-
         if (intent.action == ACTION_PROCESS_UPDATES) {
 
             // Checks for location availability changes.
             LocationAvailability.extractLocationAvailability(intent)?.let { locationAvailability ->
+                Log.d(TAG, "locationAvailability: $locationAvailability")
                 if (!locationAvailability.isLocationAvailable) {
                     Log.d(TAG, "Location services are no longer available!")
                 }
             }
 
             LocationResult.extractResult(intent)?.let { locationResult ->
+                Log.d(TAG, "locationResult: $locationResult")
                 val locations = locationResult.locations.map { location ->
                     LocationEntity(
                         latitude = location.latitude,
                         longitude = location.longitude,
                         foreground = isAppInForeground(context),
-                        date = Date(location.time)
+                        date = Date(location.timeMs)
                     )
                 }
                 if (locations.isNotEmpty()) {

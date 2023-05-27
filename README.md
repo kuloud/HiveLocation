@@ -20,16 +20,16 @@ codelab.
 
 Features
 --------------
+
 - Support demonstrates
-  - [ ] Baidu
-  - [ ] AMap
-  - [ ] Google
+    - [ x ] Baidu(`v9.4.0`)
+    - [  ] AMap
+    - [  ] Google
 
 Prerequisites
 --------------
 
 - Android API Level > v21
-
 
 Getting Started
 ---------------
@@ -49,21 +49,74 @@ Add permissions into your **application**'s `Manifest` file:
 
 ```xml
 <!-- 这个权限用于进行网络定位-->
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<!-- 这个权限用于访问系统接口提供的卫星定位信息-->
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-<!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<!-- 访问网络，网络定位需要上网-->
+<uses-permission
+    android:name="android.permission.ACCESS_COARSE_LOCATION" /><!-- 这个权限用于访问系统接口提供的卫星定位信息-->
+<uses-permission
+android:name="android.permission.ACCESS_FINE_LOCATION" /><!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+<uses-permission
+android:name="android.permission.ACCESS_WIFI_STATE" /><!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+<uses-permission
+android:name="android.permission.ACCESS_NETWORK_STATE" /><!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+<uses-permission
+android:name="android.permission.CHANGE_WIFI_STATE" /><!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><!-- 访问网络，网络定位需要上网-->
 <uses-permission android:name="android.permission.INTERNET" />
 
 <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+```
+
+Add AppKey into  your **application**'s `Manifest` file or `local.properties`, add Baidu location 
+service into **application** tag:
+
+```xml
+<!-- Baidu BEGIN -->
+<meta-data
+    android:name="com.baidu.lbsapi.API_KEY"
+    android:value="${BD_MAP_AK}" />
+
+<service
+    android:name="com.baidu.location.f"
+    android:enabled="true"
+    android:process=":remote" />
+<!-- Baidu END -->
+```
+
+Setup Client for HiveLocation:
+
+```kotlin
+LocationClient.setAgreePrivacy(true)
+HiveLocation.setClient(
+    requireContext(),
+    BaiduFusedLocationClient(requireContext().applicationContext)
+)
+```
+
+Then, use `LocationUpdateViewModel` to handle with location updates in foreground:
+
+```kotlin
+class LocationUpdateFragment : Fragment() {
+
+    private val locationUpdateViewModel by lazy {
+        ViewModelProvider(this)[LocationUpdateViewModel::class.java]
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        locationUpdateViewModel.receivingLocationUpdates.observe(
+            viewLifecycleOwner
+        ) { receivingLocation ->
+            // handle with receivingLocation
+        }
+
+        locationUpdateViewModel.locationListLiveData.observe(
+            viewLifecycleOwner
+        ) { locations ->
+            // handle with history locations
+        }
+    }
+
+}
 ```
 
 ### AMap
@@ -81,33 +134,27 @@ Add permissions into your **application**'s `Manifest` file:
 
 ```xml
 <!--允许访问网络，必选权限-->
-<uses-permission android:name="android.permission.INTERNET" />
-<!--允许获取精确位置，精准定位必选-->
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<!--允许获取粗略位置，粗略定位必选-->
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<!--允许获取设备和运营商信息，用于问题排查和网络定位（无gps情况下的定位），若需网络定位功能则必选-->
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-<!--允许获取网络状态，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<!--允许获取wifi网络信息，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<!--允许获取wifi状态改变，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
-<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-<!--后台获取位置信息，若需后台定位则必选-->
-<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-<!--用于申请调用A-GPS模块,卫星定位加速-->
-<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-<!--允许写设备缓存，用于问题排查-->
-<uses-permission android:name="android.permission.WRITE_SETTINGS" />
-<!--允许写入扩展存储，用于写入缓存定位数据-->
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<!--允许读设备等信息，用于问题排查-->
+<uses-permission android:name="android.permission.INTERNET" /><!--允许获取精确位置，精准定位必选-->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /><!--允许获取粗略位置，粗略定位必选-->
+<uses-permission
+android:name="android.permission.ACCESS_COARSE_LOCATION" /><!--允许获取设备和运营商信息，用于问题排查和网络定位（无gps情况下的定位），若需网络定位功能则必选-->
+<uses-permission
+android:name="android.permission.READ_PHONE_STATE" /><!--允许获取网络状态，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
+<uses-permission
+android:name="android.permission.ACCESS_NETWORK_STATE" /><!--允许获取wifi网络信息，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
+<uses-permission
+android:name="android.permission.ACCESS_WIFI_STATE" /><!--允许获取wifi状态改变，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /><!--后台获取位置信息，若需后台定位则必选-->
+<uses-permission
+android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /><!--用于申请调用A-GPS模块,卫星定位加速-->
+<uses-permission
+android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /><!--允许写设备缓存，用于问题排查-->
+<uses-permission android:name="android.permission.WRITE_SETTINGS" /><!--允许写入扩展存储，用于写入缓存定位数据-->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><!--允许读设备等信息，用于问题排查-->
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> 
 ```
 
 ### Google
-
 
 Support
 -------
@@ -118,6 +165,7 @@ https://github.com/kuloud/HiveLocation/issues
 Patches are encouraged, and may be submitted according to the instructions in CONTRIBUTING.md.
 
 # License
+
 ```xml
 Copyright 2023 kuloud (kuloud@outlook.com)
 

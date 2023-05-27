@@ -16,6 +16,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        if (project.rootProject.file('local.properties').canRead()) {
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        }
+        manifestPlaceholders = [BD_MAP_AK: "${properties.getProperty('BD_MAP_AK')}"]
     }
 
     buildTypes {

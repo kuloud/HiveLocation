@@ -8,11 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.kuloud.android.location.app.databinding.FragmentLocationUpdateBinding
 import com.kuloud.android.location.common.utils.hasPermission
 import com.kuloud.android.location.common.viewmodels.LocationUpdateViewModel
-import java.lang.StringBuilder
 
 private const val TAG = "LocationUpdateFragment"
 
@@ -27,7 +26,7 @@ open class LocationUpdateFragment : Fragment() {
     private lateinit var binding: FragmentLocationUpdateBinding
 
     private val locationUpdateViewModel by lazy {
-        ViewModelProviders.of(this).get(LocationUpdateViewModel::class.java)
+        ViewModelProvider(this)[LocationUpdateViewModel::class.java]
     }
 
     override fun onAttach(context: Context) {

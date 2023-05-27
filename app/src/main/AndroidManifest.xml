@@ -24,7 +24,8 @@
     <!--用于申请调用A-GPS模块,卫星定位加速-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <!--允许写设备缓存，用于问题排查-->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <!--允许读设备等信息，用于问题排查-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -54,7 +55,7 @@
         <!-- Baidu BEGIN -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="AK" />
+            android:value="${BD_MAP_AK}" />
 
         <service
             android:name="com.baidu.location.f"
