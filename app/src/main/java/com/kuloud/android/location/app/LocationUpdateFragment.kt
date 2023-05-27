@@ -3,6 +3,7 @@ package com.kuloud.android.location.app
 import android.Manifest
 import android.content.Context
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -57,12 +58,14 @@ open class LocationUpdateFragment : Fragment() {
             activityListener?.requestBackgroundLocationPermission()
         }
 
+        binding.locationOutputTextView.movementMethod = ScrollingMovementMethod()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         locationUpdateViewModel.receivingLocationUpdates.observe(
             viewLifecycleOwner
         ) { receivingLocation ->

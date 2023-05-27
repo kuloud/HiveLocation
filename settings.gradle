@@ -16,3 +16,5 @@ rootProject.name = "HiveLocation"
 include ':app'
 include ':common'
 include ':baidu'
+include ':amap'
+include ':google'

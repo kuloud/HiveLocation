@@ -12,8 +12,6 @@ class LocationRequest(
     companion object {
         val PRIORITY_HIGH_ACCURACY = 100
         val PRIORITY_BALANCED_POWER_ACCURACY = 102
-        val PRIORITY_LOW_ACCURACY = 103
-
-
+        val PRIORITY_DEVICE_SENSORS = 103
     }
 }

@@ -1,43 +1,30 @@
-Location Updates in the Background (Kotlin)
+HiveLocation 后台持续定位 (Kotlin)
 ===========================================
-Demonstrates retrieving location updates ( Baidu / AMap / Google ) in the background.
+包装高德、百度、谷歌的定位模块，按照 Google 官方定位样例工程 [android/location-samples](https://github.com/android/location-samples) ,将定位回调数据持久化保存。
+可以方便的利用 ViewModel 绑定 LiveData，也可以直接数据查询。
 
-Introduction
-============
-This sdk allows a user to receive location updates in the background via a `PendingIntent`.
 
-In addition to the FINE location permission (`android.permission.ACCESS_FINE_LOCATION`), if you do
-have an approved use case for receiving location updates in the background, it will require an
-additional permission (`android.permission.ACCESS_BACKGROUND_LOCATION`).
-
-To run this sample, **location must be enabled**.
-
-**IMPORTANT NOTE**: You should generally prefer 'while-in-use' for location updates, i.e., receiving
-location updates while the app is in use and create a foreground service (tied to a Notification)
-when the user navigates away from the app. To learn how to do that instead, review the
-[Receive location updates in Android 10 with Kotlin](https://codelabs.developers.google.com/codelabs/while-in-use-location/index.html?index=..%2F..index#0)
-codelab.
-
-Features
+功能特性
 --------------
 
-- Support demonstrates
+- 支持定位SDK
 
     - [x] Baidu(`v9.4.0`)
     - [x] AMap(`6.3.0`)
     - [] Google
+- 定位数据持久化
 
 Prerequisites
 --------------
 
 - Android API Level > v21
 
-Getting Started
+开始使用
 ---------------
 
 ### Baidu
 
-Add the dependency below into your **module**'s `build.gradle` file:
+在 `build.gradle` 中添加组件依赖:
 
 ```gradle
 dependencies {
@@ -46,7 +33,7 @@ dependencies {
 }
 ```
 
-Add permissions into your **application**'s `Manifest` file:
+在应用的 `Manifest` 文件中神明应用权限:
 
 ```xml
 <!-- 这个权限用于进行网络定位-->
@@ -66,8 +53,7 @@ android:name="android.permission.CHANGE_WIFI_STATE" /><!-- 写入扩展存储，
 <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 ```
 
-Add AppKey into  your **application**'s `Manifest` file or `local.properties`, add Baidu location 
-service into **application** tag:
+在 `Manifest` 或者 `local.properties` 中配置 SDK 的 AppKey, 在 **application** 标签中添加 SDK Service 声明:
 
 ```xml
 <!-- Baidu BEGIN -->
@@ -82,7 +68,7 @@ service into **application** tag:
 <!-- Baidu END -->
 ```
 
-Setup Client for HiveLocation:
+给 HiveLocation 设置 LocationClient 实例:
 
 ```kotlin
 LocationClient.setAgreePrivacy(true)
@@ -96,7 +82,7 @@ HiveLocation.setClient(
 
 ### AMap
 
-Add the dependency below into your **module**'s `build.gradle` file:
+在 `build.gradle` 中添加组件依赖:
 
 ```gradle
 dependencies {
@@ -105,7 +91,7 @@ dependencies {
 }
 ```
 
-Add permissions into your **application**'s `Manifest` file:
+在应用的 `Manifest` 文件中神明应用权限:
 
 ```xml
 <!--允许访问网络，必选权限-->
@@ -129,8 +115,7 @@ android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /><!--允许写
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> 
 ```
 
-Add AppKey into  your **application**'s `Manifest` file or `local.properties`, add Baidu location 
-service into **application** tag:
+在 `Manifest` 或者 `local.properties` 中配置 SDK 的 AppKey, 在 **application** 标签中添加 SDK Service 声明:
 
 ```xml
 <!-- AMap BEGIN -->
@@ -142,11 +127,19 @@ service into **application** tag:
 <!-- AMap END -->
 ```
 
+给 HiveLocation 设置 LocationClient 实例:
+
+```kotlin
+AMapLocationClient.updatePrivacyShow(context, true, false)
+AMapLocationClient.updatePrivacyAgree(context, true)
+HiveLocation.setClient(requireContext(), AMapFusedLocationClient(requireContext()))
+```
+
 ### Google
 
 TODO
 
-## Usage
+## 使用方法
 
 Use `LocationUpdateViewModel` to handle with location updates in foreground:
 
@@ -180,7 +173,7 @@ class LocationUpdateFragment : Fragment() {
 }
 ```
 
-Support
+帮助支持
 -------
 
 If you've found an error in this sample, please file an issue:
@@ -188,7 +181,7 @@ https://github.com/kuloud/HiveLocation/issues
 
 Patches are encouraged, and may be submitted according to the instructions in CONTRIBUTING.md.
 
-# License
+# 版权说明
 
 ```xml
 Copyright 2023 kuloud (kuloud@outlook.com)

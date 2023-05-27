@@ -10,7 +10,7 @@ import com.kuloud.android.location.common.FusedLocation
  */
 fun BDLocation.toFusedLocation(): FusedLocation {
     val extra = Bundle()
-    extra.putParcelable("", this)
+    extra.putParcelable("extra", this)
     return FusedLocation(
         gnssProvider, timeStamp, latitude, longitude, altitude.toFloat(), speed, radius, extra
     )

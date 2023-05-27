@@ -12,8 +12,8 @@ fun LocationRequest.convertToLocationClientOption(): LocationClientOption {
     option.locationMode = when (priority) {
         LocationRequest.PRIORITY_HIGH_ACCURACY -> LocationClientOption.LocationMode.Hight_Accuracy
         LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY -> LocationClientOption.LocationMode.Battery_Saving
-        LocationRequest.PRIORITY_LOW_ACCURACY -> LocationClientOption.LocationMode.Fuzzy_Locating
-        else -> LocationClientOption.LocationMode.Battery_Saving
+        LocationRequest.PRIORITY_DEVICE_SENSORS -> LocationClientOption.LocationMode.Device_Sensors
+        else -> LocationClientOption.LocationMode.Fuzzy_Locating
     }
     //可选，设置定位模式，默认高精度
     //LocationMode.Hight_Accuracy：高精度；
