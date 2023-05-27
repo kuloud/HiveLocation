@@ -2,9 +2,8 @@ package com.kuloud.android.location.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.kuloud.android.location.app.databinding.ActivityMainBinding
 import androidx.databinding.DataBindingUtil.setContentView
-
+import com.kuloud.android.location.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), PermissionRequestFragment.Callbacks,
     LocationUpdateFragment.Callbacks {

@@ -1,4 +1,3 @@
-
 package com.kuloud.android.location.app
 
 import android.Manifest
@@ -35,10 +34,10 @@ class PermissionRequestFragment : Fragment() {
     // rationale.
     private val fineLocationRationalSnackbar by lazy {
         Snackbar.make(
-                binding.frameLayout,
-                R.string.fine_location_permission_rationale,
-                Snackbar.LENGTH_LONG
-            )
+            binding.frameLayout,
+            R.string.fine_location_permission_rationale,
+            Snackbar.LENGTH_LONG
+        )
             .setAction(R.string.ok) {
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -49,10 +48,10 @@ class PermissionRequestFragment : Fragment() {
 
     private val backgroundRationalSnackbar by lazy {
         Snackbar.make(
-                binding.frameLayout,
-                R.string.background_location_permission_rationale,
-                Snackbar.LENGTH_LONG
-            )
+            binding.frameLayout,
+            R.string.background_location_permission_rationale,
+            Snackbar.LENGTH_LONG
+        )
             .setAction(R.string.ok) {
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
@@ -181,7 +180,7 @@ class PermissionRequestFragment : Fragment() {
                             intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                             val uri = Uri.fromParts(
                                 "package",
-                                "BuildConfig.APPLICATION_ID",
+                                BuildConfig.APPLICATION_ID,
                                 null
                             )
                             intent.data = uri
@@ -204,7 +203,7 @@ class PermissionRequestFragment : Fragment() {
             requestPermissionWithRationale(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 REQUEST_FINE_LOCATION_PERMISSIONS_REQUEST_CODE,
-                object : OnPermissionRationaleListener{
+                object : OnPermissionRationaleListener {
                     override fun onPermissionRationale() {
                         fineLocationRationalSnackbar.show()
                     }
@@ -223,7 +222,7 @@ class PermissionRequestFragment : Fragment() {
             requestPermissionWithRationale(
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                 REQUEST_BACKGROUND_LOCATION_PERMISSIONS_REQUEST_CODE,
-                object : OnPermissionRationaleListener{
+                object : OnPermissionRationaleListener {
                     override fun onPermissionRationale() {
                         backgroundRationalSnackbar.show()
                     }
@@ -249,7 +248,7 @@ class PermissionRequestFragment : Fragment() {
 
     companion object {
         private const val ARG_PERMISSION_REQUEST_TYPE =
-            "com.google.android.gms.location.sample.locationupdatesbackgroundkotlin.PERMISSION_REQUEST_TYPE"
+            "com.kuloud.android.location.app.PERMISSION_REQUEST_TYPE"
 
         private const val REQUEST_FINE_LOCATION_PERMISSIONS_REQUEST_CODE = 34
         private const val REQUEST_BACKGROUND_LOCATION_PERMISSIONS_REQUEST_CODE = 56
