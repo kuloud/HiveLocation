@@ -28,20 +28,19 @@ fun Context.hasPermission(permission: String): Boolean {
  *
  * Note: The Snackbar should have an action to request the permission.
  */
-//fun Fragment.requestPermissionWithRationale(
-//    permission: String,
-//    requestCode: Int,
-//    listener: OnPermissionRationaleListener
-//) {
-//    val provideRationale = shouldShowRequestPermissionRationale(permission)
-//
-//    if (provideRationale) {
-//        listener.onPermissionRationale()
-//    } else {
-//        requestPermissions(arrayOf(permission), requestCode)
-//    }
-//}
+fun Fragment.requestPermissionWithRationale(
+    permission: String,
+    requestCode: Int,
+    listener: OnPermissionRationaleListener
+) {
+    val provideRationale = shouldShowRequestPermissionRationale(permission)
 
+    if (provideRationale) {
+        listener.onPermissionRationale()
+    } else {
+        requestPermissions(arrayOf(permission), requestCode)
+    }
+}
 interface OnPermissionRationaleListener {
     fun onPermissionRationale()
 }

@@ -1,6 +1,7 @@
 package com.kuloud.android.location.common.data.db
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.text.DateFormat
 import java.util.Date
@@ -18,6 +19,8 @@ data class LocationEntity(
     var foreground: Boolean = true,
     var date: Date = Date()
 ) {
+    @Ignore
+    constructor() : this(UUID.randomUUID())
 
     override fun toString(): String {
         val appState = if (foreground) {
@@ -26,7 +29,8 @@ data class LocationEntity(
             "in BG"
         }
 
-        return "$latitude, $longitude $appState on " +
-                "${DateFormat.getDateTimeInstance().format(date)}.\n"
+        return "$latitude, $longitude $appState on " + "${
+            DateFormat.getDateTimeInstance().format(date)
+        }.\n"
     }
 }

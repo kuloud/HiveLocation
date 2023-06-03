@@ -15,8 +15,8 @@ HiveLocation 后台持续定位 (Kotlin)
 - 支持定位SDK
 
     - [x] Baidu(`v9.4.0`)
-    - [x] AMap(`6.3.0`)
-    - [ ] Google
+    - [x] AMap(`v6.3.0`)
+    - [x] Google(`v19.0.1`)
 - 定位数据持久化
 - 定位点数据 LiveData 监听
 
