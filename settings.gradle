@@ -19,13 +19,13 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
 
-        maven {
-            url 'https://maven.pkg.github.com/kuloud/HiveLocation'
-            credentials {
-                username = properties.getProperty("gpr.user") ?: System.getenv("GPR_USER")
-                password = properties.getProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
-            }
-        }
+//        maven {
+//            url 'https://maven.pkg.github.com/kuloud/HiveLocation'
+//            credentials {
+//                username = properties.getProperty("gpr.user") ?: System.getenv("GPR_USER")
+//                password = properties.getProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+//            }
+//        }
     }
 }
 rootProject.name = "HiveLocation"

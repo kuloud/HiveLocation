@@ -28,6 +28,19 @@ HiveLocation 后台持续定位 (Kotlin)
 开始使用
 ---------------
 
+```gradle
+mavenCentral()
+
+// 或者 GPR
+maven {
+    url 'https://maven.pkg.github.com/kuloud/HiveLocation'
+    credentials {
+        username = properties.getProperty("gpr.user") ?: System.getenv("GPR_USER")
+        password = properties.getProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+    }
+}
+```
+
 ### Baidu
 
 在 `build.gradle` 中添加组件依赖:
@@ -74,7 +87,7 @@ android:name="android.permission.CHANGE_WIFI_STATE" /><!-- 写入扩展存储，
 <!-- Baidu END -->
 ```
 
-给 HiveLocation 设置 LocationClient 实例:
+给 HiveLocation 设置 Backend 实例:
 
 ```kotlin
 HiveLocation.setAgreePrivacy(true)
@@ -133,7 +146,7 @@ android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /><!--允许写
 <!-- AMap END -->
 ```
 
-给 HiveLocation 设置 LocationClient 实例:
+给 HiveLocation 设置 Backend 实例:
 
 ```kotlin
 HiveLocation.setAgreePrivacy(true)
@@ -199,3 +212,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
