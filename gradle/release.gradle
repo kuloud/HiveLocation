@@ -1,0 +1,78 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+Properties properties = new Properties()
+File propertiesFile = project.rootProject.file('local.properties')
+if (propertiesFile.exists()) {
+    InputStream inputStream = propertiesFile.newDataInputStream()
+    properties.load(inputStream)
+}
+
+afterEvaluate {
+
+    publishing {
+        repositories {
+            maven {
+                name 'gpr'
+                url 'https://maven.pkg.github.com/kuloud/HiveLocation'
+                credentials {
+                    username = properties.getProperty("gpr.user") ?: System.getenv("GPR_USER")
+                    password = properties.getProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+                }
+            }
+            maven {
+                name = "mavenCentral"
+
+                def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                // You only need this if you want to publish snapshots, otherwise just set the URL
+                // to the release repo directly
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+                credentials {
+                    username = properties.getProperty("ossrhUsername")
+                    password = properties.getProperty("ossrhPassword")
+                }
+            }
+        }
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                version releaseVersion
+                groupId = 'io.github.kuloud'
+                artifactId = releaseArtifact
+
+                pom {
+                    name = releaseArtifact
+                    description = releaseDescription
+                    url = 'https://github.com/kuloud/HiveLocation'
+                    
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'kuloud'
+                            name = 'kuloud'
+                            email = 'xkuloud@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:git@github.com:kuloud/HiveLocation.git'
+                        developerConnection = 'scm:git:ssh://github.com:kuloud/HiveLocation.git'
+                        url = 'https://github.com/kuloud/HiveLocation'
+                    }
+                }
+            }
+        }
+    }
+    signing {
+        sign publishing.publications
+    }
+}

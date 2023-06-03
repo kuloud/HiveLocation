@@ -40,8 +40,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
 //    implementation project(path: ':common')
-    implementation 'com.kuloud.android:location-common:0.0.1'
-    api 'com.amap.api:location:6.3.0'
+    implementation 'io.github.kuloud:location-common:0.0.1'
+    implementation 'com.amap.api:location:6.3.0'
 }
 
 ext {
@@ -50,4 +50,4 @@ ext {
     releaseVersion = '0.0.1'
 }
 
-apply from: rootProject.file('gradle/release_github_package_registry.gradle')
+apply from: rootProject.file('gradle/release.gradle')

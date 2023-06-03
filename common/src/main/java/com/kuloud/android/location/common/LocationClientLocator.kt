@@ -5,7 +5,7 @@ package com.kuloud.android.location.common
  * @date 2023/5/26
  */
 class LocationClientLocator {
-    var fusedLocationClient: FusedLocationClient? = null
+    var locationBackend: LocationBackend? = null
 
     companion object {
         @Volatile

@@ -6,8 +6,8 @@ import android.content.Intent
 import android.util.Log
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
-import com.kuloud.android.location.common.FusedLocationClient
 import com.kuloud.android.location.common.LocationAvailability
+import com.kuloud.android.location.common.LocationBackend
 import com.kuloud.android.location.common.LocationRequest
 import com.kuloud.android.location.common.LocationResult
 import com.kuloud.android.location.common.LocationUpdatesBroadcastReceiver
@@ -18,7 +18,7 @@ private const val TAG = "AMapFusedLocationClient"
  * @author kuloud
  * @date 2023/5/26
  */
-class AMapFusedLocationClient(context: Context) : FusedLocationClient(
+class AMapLocationBackend(context: Context) : LocationBackend(
     context
 ) {
 
@@ -62,6 +62,11 @@ class AMapFusedLocationClient(context: Context) : FusedLocationClient(
     ) {
         innerClient.setLocationOption(locationRequest.convertToLocationClientOption())
         innerClient.startLocation()
+    }
+
+    override fun setAgreePrivacy(boolean: Boolean) {
+        AMapLocationClient.updatePrivacyShow(context, true, true)
+        AMapLocationClient.updatePrivacyAgree(context, true)
     }
 
     override fun removeLocationUpdates(locationUpdatePendingIntent: PendingIntent) {

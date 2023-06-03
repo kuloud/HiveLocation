@@ -34,8 +34,8 @@ HiveLocation 后台持续定位 (Kotlin)
 
 ```gradle
 dependencies {
-    implementation "com.kuloud.android:location-common:latest"
-    implementation "com.kuloud.android:location-baidu:latest"
+    implementation "io.github.kuloud:location-common:0.0.1"
+    implementation "io.github.kuloud:location-baidu:0.0.1"
 }
 ```
 
@@ -77,10 +77,10 @@ android:name="android.permission.CHANGE_WIFI_STATE" /><!-- 写入扩展存储，
 给 HiveLocation 设置 LocationClient 实例:
 
 ```kotlin
-LocationClient.setAgreePrivacy(true)
-HiveLocation.setClient(
-    requireContext(),
-    BaiduFusedLocationClient(requireContext().applicationContext)
+HiveLocation.setAgreePrivacy(true)
+HiveLocation.setBackend(
+  requireContext(),
+  BaiduLocationBackend(requireContext().applicationContext)
 )
 ```
 
@@ -92,8 +92,8 @@ HiveLocation.setClient(
 
 ```gradle
 dependencies {
-    implementation "com.kuloud.android:location-common:latest"
-    implementation "com.kuloud.android:location-amap:latest"
+    implementation "io.github.kuloud:location-common:0.0.1"
+    implementation "io.github.kuloud:location-amap:0.0.1"
 }
 ```
 
@@ -136,9 +136,8 @@ android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /><!--允许写
 给 HiveLocation 设置 LocationClient 实例:
 
 ```kotlin
-AMapLocationClient.updatePrivacyShow(context, true, true)
-AMapLocationClient.updatePrivacyAgree(context, true)
-HiveLocation.setClient(requireContext(), AMapFusedLocationClient(requireContext()))
+HiveLocation.setAgreePrivacy(true)
+HiveLocation.setBackend(requireContext(), AMapLocationBackend(requireContext()))
 ```
 
 ### Google
@@ -182,9 +181,7 @@ class LocationUpdateFragment : Fragment() {
 帮助支持
 -------
 
-如果您发现这个示例中有错误，请提交 issue 到以下链接：https://github.com/kuloud/HiveLocation/issues 
- 
-请根据 `CONTRIBUTING.md` 中的说明进行提交。
+如果您发现这个示例中有错误，请提交 issue 到以下链接：https://github.com/kuloud/HiveLocation/issues
 
 ## 版权说明
 

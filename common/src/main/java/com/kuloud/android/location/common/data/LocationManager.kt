@@ -61,7 +61,7 @@ class LocationManager constructor(
             _receivingLocationUpdates.value = true
             // If the PendingIntent is the same as the last request (which it always is), this
             // request will replace any requestLocationUpdates() called before.
-            LocationClientLocator.getInstance().fusedLocationClient?.requestLocationUpdates(
+            LocationClientLocator.getInstance().locationBackend?.requestLocationUpdates(
                 locationRequest,
                 locationUpdatePendingIntent
             )
@@ -79,7 +79,7 @@ class LocationManager constructor(
     fun stopLocationUpdates() {
         Log.d(TAG, "stopLocationUpdates()")
         _receivingLocationUpdates.value = false
-        LocationClientLocator.getInstance().fusedLocationClient?.removeLocationUpdates(
+        LocationClientLocator.getInstance().locationBackend?.removeLocationUpdates(
             locationUpdatePendingIntent
         )
     }

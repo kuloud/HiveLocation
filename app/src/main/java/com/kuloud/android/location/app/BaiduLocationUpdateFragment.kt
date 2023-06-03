@@ -2,18 +2,17 @@ package com.kuloud.android.location.app
 
 import android.os.Bundle
 import android.view.View
-import com.baidu.location.LocationClient
-import com.kuloud.android.location.baidu.BaiduFusedLocationClient
+import com.kuloud.android.location.baidu.BaiduLocationBackend
 import com.kuloud.android.location.common.HiveLocation
 
 class BaiduLocationUpdateFragment : LocationUpdateFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        LocationClient.setAgreePrivacy(true)
-        HiveLocation.setClient(
+        HiveLocation.setAgreePrivacy(true)
+        HiveLocation.setBackend(
             requireContext(),
-            BaiduFusedLocationClient(requireContext().applicationContext)
+            BaiduLocationBackend(requireContext().applicationContext)
         )
     }
 

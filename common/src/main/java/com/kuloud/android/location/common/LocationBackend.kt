@@ -7,7 +7,12 @@ import android.content.Context
  * @author kuloud
  * @date 2023/5/24
  */
-abstract class FusedLocationClient(val context: Context) {
+abstract class LocationBackend(val context: Context) {
+
+    /**
+     * 隐私政策设置
+     */
+    abstract fun setAgreePrivacy(agreed: Boolean)
 
     abstract fun requestLocationUpdates(
         locationRequest: LocationRequest,

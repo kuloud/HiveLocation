@@ -16,8 +16,9 @@ import com.baidu.location.BDLocation.TypeOffLineLocation
 import com.baidu.location.BDLocation.TypeOffLineLocationFail
 import com.baidu.location.BDLocation.TypeOffLineLocationNetworkFail
 import com.baidu.location.LocationClient
-import com.kuloud.android.location.common.FusedLocationClient
+import com.kuloud.android.location.common.HiveLocation
 import com.kuloud.android.location.common.LocationAvailability
+import com.kuloud.android.location.common.LocationBackend
 import com.kuloud.android.location.common.LocationRequest
 import com.kuloud.android.location.common.LocationResult
 import com.kuloud.android.location.common.LocationUpdatesBroadcastReceiver.Companion.ACTION_PROCESS_UPDATES
@@ -31,7 +32,7 @@ private const val TAG = "BDLocationReceived"
  * @author kuloud
  * @date 2023/5/26
  */
-class BaiduFusedLocationClient(context: Context) : FusedLocationClient(
+class BaiduLocationBackend(context: Context) : LocationBackend(
     context
 ) {
 
@@ -86,6 +87,10 @@ class BaiduFusedLocationClient(context: Context) : FusedLocationClient(
     ) {
         innerClient.locOption = locationRequest.convertToLocationClientOption()
         innerClient.start()
+    }
+
+    override fun setAgreePrivacy(agree: Boolean) {
+        LocationClient.setAgreePrivacy(agree)
     }
 
     override fun removeLocationUpdates(locationUpdatePendingIntent: PendingIntent) {

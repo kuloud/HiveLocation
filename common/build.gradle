@@ -51,4 +51,4 @@ ext {
     releaseVersion = '0.0.1'
 }
 
-apply from: rootProject.file('gradle/release_github_package_registry.gradle')
+apply from: rootProject.file('gradle/release.gradle')
