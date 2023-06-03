@@ -16,7 +16,7 @@ HiveLocation 后台持续定位 (Kotlin)
 
     - [x] Baidu(`v9.4.0`)
     - [x] AMap(`v6.3.0`)
-    - [x] Google(`v19.0.1`)
+    - [ ] Google(`v19.0.1`)
 - 定位数据持久化
 - 定位点数据 LiveData 监听
 
@@ -155,7 +155,8 @@ HiveLocation.setBackend(requireContext(), AMapLocationBackend(requireContext()))
 
 ### Google
 
-TODO
+本项目思路来源于 Google 官方的 demo，功能未做实现和验证，可直接参考原项目：
+https://github.com/android/location-samples
 
 ## 使用方法
 
